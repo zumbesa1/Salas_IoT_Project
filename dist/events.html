@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="eventstyle.css">
     <title>Server Sent Events Example</title>
 </head>
 
@@ -12,9 +13,28 @@
     <div id="app">
         <p>Last Message: {{ lastMessage }}</p>
         <p>All Messages</p>
-        <ul>
-            <li v-for="message in messages">{{ message }}</li>
-        </ul>
+        <div class="row">
+            <div class="column" style="background-color:rgb(238, 238, 238);">
+                <h2>Temperatur</h2>
+                <ul v-if="eventName === 'temperature'">
+                    <li v-for="value in arrayTempValues">{{ value }}</li>
+                </ul>
+                <ul v-else >
+                    <li v-for="value in arrayTempValues">{{ value }}</li>
+                </ul>
+            </div>
+            <div class="column" style="background-color:rgb(255, 255, 255);">
+                <h2>Gaswerte</h2>
+                <ul v-if="eventName === 'gasValue'">
+                    <li v-for="value in arrayGasValues">{{ value }}</li>
+                </ul>
+                <ul v-else>
+                    <li v-for="value in arrayGasValues">{{ value }}</li>
+                </ul>
+            </div>
+          </div>
+
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

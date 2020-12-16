@@ -2,12 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>Particle Demo App</title>
 </head>
 <body>
-    <p>This is a demo app.</p>
-    <p><a href="/cloud_demo.html">Cloud demo (event, variables, functions)</a></p>
-    <p><a href="/events.html">Events</a></p>
+    <div class="container">
+        <div style="margin-top: 150px;">
+            <h1 class="text-center">STATUS ANSCHAUEN</h1>
+            <button id="gotoMyAppView" type="button" class="btn btn-primary btn-block">BENUTZE DEINE WEB-APP</button>
+            <button id="gotoMyMessages" type="button" class="btn btn-primary btn-block">  NACHRICHTEN </button>
+            <!--<p><a href="/cloud_demo.html">Cloud demo (event, variables, functions)</a></p>
+            <p><a href="/events.html">Events</a></p>-->
+        </div>
+    </div>
+    <script type="text/javascript">
+        document.getElementById("gotoMyAppView").onclick = function () {
+            location.href = "/cloud_demo.html";
+        };
+    </script>
+    <script type="text/javascript">
+        document.getElementById("gotoMyMessages").onclick = function () {
+            location.href = "/events.html";
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="events.js"></script>
 </body>
 </html>
