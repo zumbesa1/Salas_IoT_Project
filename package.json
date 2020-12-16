@@ -12,10 +12,12 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.20.0",
+    "chart.js": "^2.9.4",
     "cors": "^2.8.5",
     "eventsource": "^1.0.7",
     "express": "^4.17.1",
-    "express-sse": "^0.5.3"
+    "express-sse": "^0.5.3",
+    "vue-chartjs": "^3.5.1"
   },
   "engines": {
     "node": "12.x"
