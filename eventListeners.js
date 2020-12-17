@@ -34,7 +34,7 @@ function getTemperature (event) {
 function getGasValue (event) {
     // read variables from the event
     let ev = JSON.parse(event.data);
-    var evData = ev.data; // the data from the argon event: "pressed" or "released"
+    var evData = ev.data; // the data from the argon event: "gasvalue"
     let evDeviceId = ev.coreid; // the device id
     let evTimestamp = Date.parse(ev.published_at); // the timestamp of the event
     

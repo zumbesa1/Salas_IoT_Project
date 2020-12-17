@@ -1,33 +1,59 @@
 var app = new Vue({
+  el: "#app",
+  data: {
+      messages: [],
+      lastMessage: ""
+  },
+  mounted: function () {
+      this.initSse();
+  },
+  methods: {
+      initSse: function () {
+          if (typeof (EventSource) !== "undefined") {
+              var url = window.location.origin + "/api/events";
+              var source = new EventSource(url);
+              source.onmessage = (event) => { 
+                  this.messages.push(event.data);
+                  this.lastMessage = event.data;
+              };
+          } else {
+              this.message = "Your browser does not support server-sent events.";
+          }
+      }
+  }
+})
+/*var app = new Vue({
     el: "#app",
     data: {
-        successfulLoad: true,
-        eventName: "",
+      messages: [],
+      lastMessage: "",
+      successfulLoad: true,
+      eventName: "",
+      message: "",
+      temperaturSensor: {
+        alert : false,
+        message: "",      
+        lastTime: "",
+        lastValue: "",
+        values: [],  
+        timeCollection: [],
+      },
+      firstGasSensor: {
+        alert : false,
         message: "",
-        temperaturSensor: {
-          alert : false,
-          message: "",      
-          lastTime: "",
-          lastValue: "",
-          values: [],  
-          timeCollection: [],
-        },
-        firstGasSensor: {
-          alert : false,
-          message: "",
-          lastTime: "",
-          lastValue: "",
-          values: [],
-          timeCollection: [],
-        },
-        secondGasSensor: {
-          alert : false,
-          message: "",
-          lastTime: "",
-          lastValue: "",
-          values: [],
-          timeCollection: [],
-        }
+        lastTime: "",
+        lastValue: "",
+        values: [],
+        timeCollection: [],
+      },
+      secondGasSensor: {
+        alert : false,
+        message: "",
+        lastTime: "",
+        lastValue: "",
+        values: [],
+        timeCollection: [],
+      }
     },
     mounted: function () {
         this.initSse();
@@ -213,3 +239,5 @@ var app = new Vue({
         },
     }
 })
+
+*/
