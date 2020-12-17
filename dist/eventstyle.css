@@ -2,8 +2,18 @@
     box-sizing: border-box;
   }
 
-  
+  .goodAlert{
+    background-color: lightgreen;
+    text-align: center;
+  }
 
+  
+  .badAlert{
+    background-color: lightcoral;
+    text-align: center;
+  }
+
+  
   .row:after {
     content: "";
     display: table;

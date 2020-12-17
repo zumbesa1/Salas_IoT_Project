@@ -62,6 +62,7 @@ for (let device of devices) {
     
     source.addEventListener('temperature', eventListeners.getTemperature)
     source.addEventListener('gasValue', eventListeners.getGasValue)
+    source.addEventListener('gasValue2', eventListeners.getGasValue2)
 
     /////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////
