@@ -4,40 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="eventstyle.css">
     <title>Server Sent Events Example</title>
 </head>
 
 <body>
-    <div id="app">
-        <p>Last Message: {{ lastMessage }}</p>
-        <p>All Messages</p>
+    <div id="app" class="container">
+        <ul class="pager">
+            <li class="previous"><a href="index.html"><h3>Previous</h3></a></li>
+        </ul>
         <div class="row">
-            <div class="column" style="background-color:rgb(238, 238, 238);">
-                <h2>Temperatur</h2>
-                <ul v-if="eventName === 'temperature'">
+            <div style="background-color:rgb(255, 255, 255); text-align: center;">
+                <h1>Temperatur</h1>
+                <!--- <ul v-if="eventName === 'temperature'">
                     <li v-for="value in arrayTempValues">{{ value }}</li>
                 </ul>
-                <ul v-else >
+                <ul v-else>
                     <li v-for="value in arrayTempValues">{{ value }}</li>
-                </ul>
+                </ul>--->
+                <div class="shadow-lg p-3 mb-5 bg-white rounded">
+                    <canvas class="myv-4 w-100" id="myChartTemp" width="900" height="380"></canvas>
+                </div>
             </div>
-            <div class="column" style="background-color:rgb(255, 255, 255);">
-                <h2>Gaswerte</h2>
-                <ul v-if="eventName === 'gasValue'">
+            <div style="background-color:rgb(255, 255, 255); text-align: center;">
+                <h1>Gaswerte</h1>
+                <!--- <ul v-if="eventName === 'gasValue'">
                     <li v-for="value in arrayGasValues">{{ value }}</li>
                 </ul>
                 <ul v-else>
                     <li v-for="value in arrayGasValues">{{ value }}</li>
-                </ul>
+                </ul>--->
+                <div class="shadow-lg p-3 mb-5 bg-white rounded">
+                    <canvas class="myv-4 w-100" id="myChartGas" width="900" height="380"></canvas>
+                </div>
             </div>
-          </div>
-
-
+        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script src="events.js"></script>
 </body>
+
 
 </html>
