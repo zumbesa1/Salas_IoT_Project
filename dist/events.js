@@ -41,6 +41,7 @@ var app = new Vue({
                 var url = window.location.origin + "/api/events";
                 var source = new EventSource(url);
                 source.onmessage = (event) => { 
+                  console.log("hello");
                   this.updateVariables(event);
                   this.successfulLoad = true;
                 };
@@ -67,9 +68,9 @@ var app = new Vue({
                         this.temperaturSensor.timeCollection.push(this.temperaturSensor.lastTime);
                         this.temperaturSensor.values.push(this.temperaturSensor.lastValue);
                         this.createChartTemp();
-                        if(this.temperaturSensor.values.length > 30){
+                        if(this.temperaturSensor.values.length > 20){
                           this.temperaturSensor.values.splice(0.1);
-                          this.temperaturSensor.values.splice(0,1);
+                          this.temperaturSensor.timeCollection.splice(0,1);
                         }
                     }
                     else if(this.eventName === "gasValue"){
@@ -79,9 +80,9 @@ var app = new Vue({
                       this.firstGasSensor.timeCollection.push(this.firstGasSensor.lastTime);
                       this.firstGasSensor.values.push(this.firstGasSensor.lastValue);
                       this.createChartGas();
-                      if(this.firstGasSensor.values.length > 30){
+                      if(this.firstGasSensor.values.length > 20){
                         this.firstGasSensor.values.splice(0,1);
-                        this.firstGasSensor.values.splice(0,1);
+                        this.firstGasSensor.timeCollection.splice(0,1);
                       }
                         if(value > 2000){
                           this.firstGasSensor.gasValueAlert = true; 
@@ -95,9 +96,9 @@ var app = new Vue({
                       this.secondGasSensor.timeCollection.push(this.secondGasSensor.lastTime);
                       this.secondGasSensor.values.push(this.secondGasSensor.lastValue);
                       this.createChartGas2();
-                      if(this.secondGasSensor.values.length > 30){
+                      if(this.secondGasSensor.values.length > 20){
                         this.secondGasSensor.values.splice(0,1);
-                        this.secondGasSensor.values.splice(0,1);
+                        this.secondGasSensor.timeCollection.splice(0,1);
                       }
                         if(value > 2000){
                           this.secondGasSensor.alert = true; 

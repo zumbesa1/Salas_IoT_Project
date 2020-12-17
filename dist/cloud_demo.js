@@ -72,7 +72,7 @@ var app = new Vue({
                 })
         },
         // get the value of the variable "buttonState" on the device with number "nr" from your backend
-        getButtonState: function (nr) {
+        getTemperature: function (nr) {
             axios.get(rootUrl + "/api/device/" + nr + "/variable/temperature")
                 .then(response => {
                     // Handle the response from the server
