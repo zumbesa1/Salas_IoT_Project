@@ -15,6 +15,7 @@ try {
 
 const eventListeners = require('./eventListeners.js');
 var SSE = require('express-sse');
+const { Console } = require('console');
 
 var sse = new SSE([]);
 eventListeners.sse = sse;
@@ -88,7 +89,8 @@ app.get('/api/device/:id/variable/:name', (req, res) => {
                 });
             })
             .catch( error => {
-                res.status(500).send({ error: "could not read current value" });
+                res.status(500).send({ error: "could not read current value",
+            });
             });
     }
 })

@@ -4,32 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Sent Events Example</title>
-</head>
-
-<body>
-
-    <div id="app">
-        <p>Last Message: {{ lastMessage }}</p>
-        <p>All Messages</p>
-        <ul>
-            <li v-for="message in messages">{{ message }}</li>
-        </ul>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="events.js"></script>
-</body>
-
-</html>
-
-
-<!--<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -62,12 +36,24 @@
             </div>
             <div class="shadow-lg p-3 mb-5 bg-white rounded" style="background-color:rgb(255, 255, 255); text-align: center;">
                 <h1>Gaswert von Sensor 1</h1>
+                <!--- <ul v-if="eventName === 'gasValue'">
+                    <li v-for="value in arrayGasValues">{{ value }}</li>
+                </ul>
+                <ul v-else>
+                    <li v-for="value in arrayGasValues">{{ value }}</li>
+                </ul>--->
                 <div>
                     <canvas class="myv-4 w-100" id="myChartGas" width="900" height="380"></canvas>
                 </div>
             </div>
             <div class="shadow-lg p-3 mb-5 bg-white rounded" style="background-color:rgb(255, 255, 255); text-align: center;">
                 <h1>Gaswert von Sensor 2</h1>
+                <!--- <ul v-if="eventName === 'gasValue'">
+                    <li v-for="value in arrayGasValues">{{ value }}</li>
+                </ul>
+                <ul v-else>
+                    <li v-for="value in arrayGasValues">{{ value }}</li>
+                </ul>--->
                 <div>
                     <canvas class="myv-4 w-100" id="myChartGas2" width="900" height="380"></canvas>
                 </div>
@@ -82,4 +68,4 @@
 </body>
 
 
-</html>-->
+</html>
