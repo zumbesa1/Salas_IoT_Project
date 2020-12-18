@@ -43,13 +43,13 @@ var app = new Vue({
                 var url = window.location.origin + "/api/events";
                 var source = new EventSource(url);
                 source.onmessage = async (event) => { 
-                  console.log("hello");
+                  console.log(event);
                   this.updateVariables(event);
                   this.successfulLoad = true;
                 };
             } else {
                 this.successfulLoad = false;
-                this.message = "Es besteht keine Verbindung zu deinem smarten Feuermelder.";
+                this.message = "Es besteht keine Verbindung zu deinem smarten Brandmelder.";
             }
         },
         updateVariables(event){
@@ -125,7 +125,7 @@ var app = new Vue({
                     data: this.firstGasSensor.values,
                     lineTension: 0,
                     backgroundColor: 'lightgrey',
-                    borderColor: '#007bff',
+                    borderColor: 'black',
                     borderWidth: 1,
                     pointBackgroundColor: '#007bff',
                     pointRadius: 2
@@ -136,12 +136,15 @@ var app = new Vue({
                   scales: {
                     yAxes: [{
                       ticks: {
-                        beginAtZero: false
+                        suggestedMin: 0,
+                        suggestedMax: 600,
+                        stepSize: 50
                       }
                     }]
                   },
                   legend: {
-                    display: false
+                    display: true,
+                    legend: "CO | CO2"
                   }
                 }
               })
@@ -158,7 +161,7 @@ var app = new Vue({
                     data: this.secondGasSensor.values,
                     lineTension: 0,
                     backgroundColor: 'lightgrey',
-                    borderColor: '#007bff',
+                    borderColor: 'black',
                     borderWidth: 1,
                     pointBackgroundColor: '#007bff',
                     pointRadius: 2
@@ -169,12 +172,15 @@ var app = new Vue({
                   scales: {
                     yAxes: [{
                       ticks: {
-                        beginAtZero: false
+                        suggestedMin: 0,
+                        suggestedMax: 600,
+                        stepSize: 50
                       }
                     }]
                   },
                   legend: {
-                    display: false
+                    display: true,
+                    legend: "CO | CO2"
                   }
                 }
               })
@@ -192,7 +198,7 @@ var app = new Vue({
                     data: this.temperaturSensor.values,
                     lineTension: 0,
                     backgroundColor: 'lightpink',
-                    borderColor: '#007bff',
+                    borderColor: 'red',
                     borderWidth: 1,
                     pointBackgroundColor: '#007bff',
                     pointRadius: 2
@@ -203,12 +209,15 @@ var app = new Vue({
                   scales: {
                     yAxes: [{
                       ticks: {
-                        beginAtZero: false
+                        suggestedMin: 0,
+                        suggestedMax: 30,
+                        stepSize: 1
                       }
                     }]
                   },
                   legend: {
-                    display: false
+                    display: true,
+                    legend: "Temp"
                   }
                 }
               })

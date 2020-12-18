@@ -4,59 +4,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>Cloud Functions and Variables Example</title>
+    <link rel="stylesheet" href="eventstyle.css">
+    <title>ÜBREBLICK</title>
 </head>
 
 <body>
     <div id="app" class="container">
-        <div  style="margin-top: 150px;">
-            <ul class="pager">
-                <li class="previous"><a href="index.html">Previous</a></li>
-            </ul>
-            <div class="text-center">
-                <h2>HALLO, HERZLICH WILLKOMMEN</h2>
-                <p> Hier bekommst du einen klaren überblick und erhälst Nachrichten von deinem smarten Feuermelden.</p>
-            </div>
-            <div class="panel-group">
-                <div class="panel panel-default">
-                    <div class="panel-heading text-center"><h3>VERBINGUNGSSTATUS</h3></div>
-                    <div class="panel-body text-center" v-if="connectionState_0 === 0 && connectionState_1===0"  style="background-color: orangered;">
-                        <h3>GERÄTE SIND NICHT VERBUNDEN</h3>
-                    </div>
-                    <div class="panel-body text-center" v-if="connectionState_0 === 1 && connectionState_1===1"  style="background-color: greenyellow;">
-                        <h3>GERÄTE SIND VERBUNDEN</h3>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading text-center"><h3>DEVICES</h3> <!-- VARIABLES  --></div>
-                    <div class="panel-body text-center">
-                        <!-- Read variables example -->
-                        <h4>VERBINDDUNGSSTATUS VON GERÄT 1</h4>
-                        <button class="btn btn-primary btn-block" v-on:click="getConnectionState(0)">{{ connectionState_0 }}</button>
-                        <br>
-                        <p></p>
-                        <br>
-                        <h4>VERBINDDUNGSSTATUS VON GERÄT 2</h4>
-                        <button class="btn btn-primary btn-block" v-on:click="getConnectionState(1)"> {{ connectionState_1 }}</button>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading text-center"><h3>STEURE DIE VERBINDUNG VON HIER AUS</h3> <!-- VARIABLES  --></div>
-                    <div class="panel-body text-center">
-                        <!-- Read variables example -->
-                        <button type="button" class="btn btn-primary btn-block" v-on:click="connectDevicesByButton(0)">CONNECT DEVICES</button>
-                        <button type="button" class="btn btn-primary btn-block" v-on:click="disconnectDevicesByButton(0)">DISCONNECT DEVICES</button>
-                    </div>
-                </div>
+        <ul class="pager">
+            <li class="previous"><a href="index.html">Previous</a></li>
+        </ul>
+        <div class="row"  v-if="successfulLoad">
+            <div class="text-light text-center shadow-lg p-3 mb-5 bg-success rounded">
+                <h3>{{message}}</h3>
             </div>
         </div>
+        <div class="row" v-else-if="!successfulLoad">            
+            <div class="text-light text-center shadow-lg p-3 mb-5 bg-danger rounded">
+                <h3>{{message}}</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="text-center shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="text-center">
+                    <h2>HALLO, HERZLICH WILLKOMMEN</h2>
+                    <p> Hier bekommst du einen klaren überblick und erhälst Nachrichten von deinem smarten Brandmelder.</p>
+                </div>              
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading text-center">
+                            <h3>TEMPERATUR</h3>
+                        </div>
+                        <div class="panel-body text-center"
+                            style="background-color: lightgreen;">
+                            <h3>{{temperaturSensor.lastValue}} °C</h3>
+                            <p>Zuletzt aktualisiert um: {{temperaturSensor.lastTime}}</p>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading text-center">
+                            <h3>DEVICES</h3> <!-- VARIABLES  -->
+                        </div>
+                        <div class="panel-body text-center"
+                            style="background-color: lightgreen;">
+                        <h3>{{firstGasSensor.lastValue}}</h3>
+                        <p>Zuletzt aktualisiert um: {{firstGasSensor.lastTime}}</p>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading text-center">
+                            <h3>DEVICES</h3> <!-- VARIABLES  -->
+                        </div>
+                        <div class="panel-body text-center"
+                            style="background-color: lightgreen;">
+                        <h3>{{secondGasSensor.lastValue}}</h3>
+                        <p>Zuletzt aktualisiert um: {{secondGasSensor.lastTime}}</p>
+                    </div>
+                    </div>
+                </div>
+            </div>
+       </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
     <script src="cloud_demo.js"></script>
 </body>
-
 </html>

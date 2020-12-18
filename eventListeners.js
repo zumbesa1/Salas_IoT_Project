@@ -1,14 +1,3 @@
-//remember the Values to send them tu frontend
-var arrayGasValues = {
-    name : "gasValue",
-    values: []
-}
-var arrayTempValues = {
-    name : "tempValues",
-    values : [ ]
-};
-
-
 // react on the "getTemperature" Event
 function getTemperature (event) {
     // read variables from the event
@@ -16,18 +5,24 @@ function getTemperature (event) {
     let evData = ev.data; // the data from the argon event: "pressed" or "released"
     let evDeviceId = ev.coreid; // the device id
     let evTimestamp = Date.parse(ev.published_at); // the timestamp of the event
+    let alrtDevice = 0;
 
     // helper variables that we need to build the message to be sent to the clients
-    let message = "Verbindung zu deinem smarten Feuernmelder ist aktiv.";
+    let message = "Verbindung zu deinem smarten Brandmelder ist aktiv.";
     var floatValue = parseFloat(evData);
-    var correctedTempValue = ((floatValue - 4)*10)/10;
-    let newTempValue = correctedTempValue.toString();
-    
-    // push value into correct array
-    arrayTempValues.values.push(newTempValue);
+    var correctednewTempValue = ((floatValue - 4)*10)/10;
+    correctedoldTempValue = correctednewTempValue;
+    let newTempValue = correctednewTempValue.toString();
+    let difference = correctednewTempValue-correctedoldTempValue;
+    if( difference > 1.5 ){
+        alrtDevice = 1;
+    }
+    else{
+        alrtDevice = 0;
+    }
 
     // send data to all connected clients
-    sendData("temperature", newTempValue, message, evDeviceId, evTimestamp);
+    sendData("temperature", newTempValue, message, evDeviceId, evTimestamp, alrtDevice);
 }
 
 // react on the "getGasValue" Event
@@ -37,13 +32,18 @@ function getGasValue (event) {
     var evData = ev.data; // the data from the argon event: "gasvalue"
     let evDeviceId = ev.coreid; // the device id
     let evTimestamp = Date.parse(ev.published_at); // the timestamp of the event
+    let alrtDevice = 0;
+    if( evData > 300 ){
+        alrtDevice = 1;
+    }
+    else{
+        alrtDevice = 0;
+    }
     
-    // push the gasValues into the correct Array
-    arrayGasValues.values.push(evData);
     // helper variables that we need to build the message to be sent to the clients
-    let message = "Verbindung zu deinem smarten Feuernmelder ist aktiv.";
+    let message = "Verbindung zu deinem smarten Brandmelder ist aktiv.";
     // send data to all connected clients
-    sendData("gasValue", evData, message, evDeviceId, evTimestamp);
+    sendData("gasValue", evData, message, evDeviceId, evTimestamp, alrtDevice);
 }
 
 // react on the "getGasValue" Event
@@ -53,19 +53,24 @@ function getGasValue2 (event) {
     var evData = ev.data; // the data from the argon event: "pressed" or "released"
     let evDeviceId = ev.coreid; // the device id
     let evTimestamp = Date.parse(ev.published_at);
-    // push the gasValues into the correct Array
-    arrayGasValues.values.push(evData);
+    let alrtDevice = 0;
+    if( evData > 300 ){
+        alrtDevice = 1;
+    }
+    else{
+        alrtDevice = 0;
+    }
     // helper variables that we need to build the message to be sent to the clients
-    let message = "Verbindung zu deinem smarten Feuernmelder ist aktiv.";
+    let message = "Verbindung zu deinem smarten Brandmelder ist aktiv.";
     // send data to all connected clients
-    sendData("gasValue2", evData, message, evDeviceId, evTimestamp);
+    sendData("gasValue2", evData, message, evDeviceId, evTimestamp, alrtDevice);
 }
 
 
 
 // send data to the clients.
 // You don't have to change this function
-function sendData(evName, evData, message, evDeviceId, evTimestamp) {
+function sendData(evName, evData, message, evDeviceId, evTimestamp, alrtDevice) {
     
     // map device id to device nr
     let nr = exports.deviceIds.indexOf(evDeviceId)
@@ -76,7 +81,8 @@ function sendData(evName, evData, message, evDeviceId, evTimestamp) {
         value: evData,
         message: message,
         deviceId: nr,
-        time: evTimestamp
+        time: evTimestamp,
+        alrtDevice: alrtDevice
     };
 
     // send the data to all connected clients
