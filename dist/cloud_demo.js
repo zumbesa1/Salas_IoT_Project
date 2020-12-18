@@ -60,7 +60,6 @@ var app = new Vue({
         // react on events: update the variables to be displayed
         updateVariables(ev) {
             // Event "buttonStateChanged"
-            console.log(ev);
             this.message = ev.message;
             var formatedTimestamp = new Date(ev.time);
             var hour = formatedTimestamp.getHours().toString();
