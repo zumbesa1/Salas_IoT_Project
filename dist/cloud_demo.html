@@ -42,6 +42,9 @@
                             style="background-color: lightgreen;">
                             <h3>{{temperaturSensor.lastValue}} °C</h3>
                             <p>Zuletzt aktualisiert um: {{temperaturSensor.lastTime}}</p>
+                            <div v-if="temperaturSensor.message !=''">
+                                <h3>{{temperaturSensor.message}}</h3>
+                            </div>
                         </div>
                     </div>
                     <div class="panel panel-default">
@@ -52,6 +55,9 @@
                             style="background-color: lightgreen;">
                         <h3>{{firstGasSensor.lastValue}}</h3>
                         <p>Zuletzt aktualisiert um: {{firstGasSensor.lastTime}}</p>
+                        <div v-if="firstGasSensor.message !=''">
+                            <h3>{{firstGasSensor.message}}</h3>
+                        </div>
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading text-center">
@@ -59,8 +65,11 @@
                         </div>
                         <div class="panel-body text-center"
                             style="background-color: lightgreen;">
-                        <h3>{{secondGasSensor.lastValue}}</h3>
+                            <h3>{{secondGasSensor.lastValue}}</h3>
                             <p>Zuletzt aktualisiert um: {{secondGasSensor.lastTime}}</p>
+                            <div v-if="secondGasSensor.message !=''">
+                                <h3>{{secondGasSensor.message}}</h3>
+                            </div>
                         </div>
                     </div>
                 </div>

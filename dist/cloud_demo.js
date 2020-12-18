@@ -72,7 +72,8 @@ var app = new Vue({
                 this.temperaturSensor.lastTime = time;
 
                 if (ev.alrtDevice === 1) {
-                   temperaturSensor.alert++;
+                   this.temperaturSensor.alert++;
+                   this.temperaturSensor.message = "Die Temperatur steigt. Bitte nachsehen!";
                 }
             }
             else if (ev.eventName === "gasValue") {
@@ -80,7 +81,10 @@ var app = new Vue({
                 this.firstGasSensor.lastTime = time;
 
                 if (ev.alrtDevice === 1) {
-                    firstGasSensor.alert++;
+                    this.firstGasSensor.alert++;
+                }
+                if(this.firstGasSensor.alert > 39){
+                    this.firstGasSensor.message = "Bitte nachschauen ob alles in Ordnung ist!";
                 }
             }
             else if (ev.eventName === "gasValue2") {
@@ -88,7 +92,10 @@ var app = new Vue({
                 this.secondGasSensor.lastTime = time;
 
                 if (ev.alrtDevice === 1) {
-                    secondGasSensor.alert++;
+                    this.secondGasSensor.alert++;
+                }
+                if(this.secondGasSensor.alert > 39){
+                    this.secondGasSensor.message = "Bitte nachschauen ob alles in Ordnung ist!";
                 }
             }
             
