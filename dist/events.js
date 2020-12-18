@@ -71,7 +71,7 @@ var app = new Vue({
                         this.temperaturSensor.values.push(this.temperaturSensor.lastValue);
                         this.createChartTemp();
                         if(this.temperaturSensor.values.length > 35){
-                          this.temperaturSensor.values.splice(0.1);
+                          this.temperaturSensor.values.splice(0,1);
                           this.temperaturSensor.timeCollection.splice(0,1);
                         }
                     }
