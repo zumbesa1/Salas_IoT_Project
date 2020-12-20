@@ -113,7 +113,7 @@ var app = new Vue({
                         this.secondGasSensor.values.splice(0,1);
                         this.secondGasSensor.timeCollection.splice(0,1);
                       }
-                      if(alertDevice === 1 ){
+                      if(alertDevice === 39 ){
                         this.secondGasSensor.alert++; 
                       }
                       if(this.secondGasSensor.alert > 39){

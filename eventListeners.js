@@ -33,7 +33,7 @@ function getGasValue (event) {
     let evDeviceId = ev.coreid; // the device id
     let evTimestamp = Date.parse(ev.published_at); // the timestamp of the event
     let alrtDevice = 0;
-    if( evData > 100 ){
+    if( evData > 300 ){
         alrtDevice = 1;
     }
     else{
