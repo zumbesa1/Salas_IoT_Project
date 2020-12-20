@@ -1,0 +1,82 @@
+// This #include statement was automatically added by the Particle IDE.
+#include <MCP9808.h>
+
+#define LED 11
+
+MCP9808 mcp = MCP9808();
+
+char buffer[100];
+char str[100];
+
+double temperature = 0;
+int gasValue = 0;
+int gasValue2 = 0;
+
+
+ 
+void setup() {
+    Serial.begin(9600);
+    // Warten bis der Sensor gefunden wurde
+    while(! mcp.begin()){
+        Serial.println("MCP9808 not found");
+        delay(500);
+    }
+    
+    //registrieren der Cloudvariable "temperature" und "gasValue"
+    Particle.variable("temperature", temperature);
+    Particle.variable("gasValue", gasValue);
+    Particle.variable("gasValue2", gasValue);
+    
+    
+
+    
+    // setzt den Übertragungsmodus für das Lesen, die Modi sind in der folgenden Tabelle definiert:
+    Particle.publish("MCP9808", "starts reading");
+	mcp.setResolution(MCP9808_SLOWEST);
+	Serial.println("MCP9808 OK");
+	
+	// Resolution/Speed modes
+    //define MCP9808_FASTEST		0x00 		+0.5°C resolution   	- 30ms conversion time
+    //define MCP9808_FAST 		    0x01 		+0.25°C resolution	    - 65ms conversion time
+    //define MCP9808_SLOW		    0x02 		+0.125°C resolution 	- 130ms conversion time
+    //define MCP9808_SLOWEST		0x03 		+0.0625°C resolution	- 250ms conversion time
+
+	
+    // SENSOR MICS
+    Particle.publish("MiCS-5524", "starts reading");
+    Serial.println("MiCS-5524 OK");
+}
+ 
+void loop() {
+    
+    //Print Gas 1
+    gasValue = analogRead(A0);
+    sprintf(str, "%d", gasValue);
+    Particle.publish("gasValue", str);
+    
+     //In die Konsole anzeigen lassen
+    Serial.println("gas value: "); Serial.println(gasValue2);
+    
+    delay(1000);
+    
+    // Messwerte von Print Gas 2 über den PIN A1 auslesen
+    gasValue2 = analogRead(A1);
+    sprintf(str, "%d", gasValue2);
+    Particle.publish("gasValue2", str);
+    
+    //In die Konsole anzeigen lassen
+    Serial.println("gas value2: "); Serial.println(gasValue2);
+    
+    delay(1000);
+    
+    // Temperatur mit der Methode getTemperature(); auslesen
+    temperature = mcp.getTemperature();
+    // Da int ein Double ist muss er noch formatiert werden bevor er der Variable zugewiesen wird
+    snprintf(buffer, sizeof(buffer), "%f", temperature);
+    Particle.publish("temperature", buffer);
+    
+    // In die Konsole anzeigen lassen
+    Serial.print("Temp:"); Serial.println(temperature, 2);
+    
+    delay(1000);
+}
