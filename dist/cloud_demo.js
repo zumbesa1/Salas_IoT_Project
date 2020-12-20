@@ -3,7 +3,7 @@ var rootUrl = window.location.origin; // get the root URL, e.g. https://example.
 var app = new Vue({
     el: "#app",
     data: {
-        successfulLoad: true,
+        successfulLoad: false,
         message: "",
         temperaturSensor: {
         alert : false,
@@ -14,7 +14,7 @@ var app = new Vue({
         timeCollection: [],
         },
         firstGasSensor: {
-        alert : false,
+        alert : 0,
         message: "",
         lastTime: "",
         lastValue: "",
@@ -22,24 +22,19 @@ var app = new Vue({
         timeCollection: [],
         },
         secondGasSensor: {
-          alert : false,
+          alert : 0,
           message: "",
           lastTime: "",
           lastValue: "",
           values: [],
           timeCollection: [],
         },
-        buttonState_0: "unknown", // the state of the button on device 0
-        buttonState_1: "unknown", // the state of the button on device 1
-        buttonPressCounter: 0,    // how many times the buttons were pressed
-        buttonsSync: false,       // true if the buttons were pressed within 1 second
-        blinking_0: false,        // true if device 0 is blinking.
-        blinking_1: false,        // true if device 0 is blinking.
         // add your own variables here ...
     },
     // This function is executed once when the page is loaded.
     mounted: function () {
         this.initSse();
+        this.resetMessage();
     },
     methods: {
         // Initialise the Event Stream (Server Sent Events)
@@ -50,6 +45,7 @@ var app = new Vue({
                 var source = new EventSource(url);
                 source.onmessage = (event) => {
                     this.successfulLoad = true;
+                    this.message = "Verbindung zu deinem smarten Brandmelder ist aktiv.";
                     this.updateVariables(JSON.parse(event.data));
                 };
             } else {
@@ -70,9 +66,10 @@ var app = new Vue({
             if (ev.eventName === "temperature") {
                 this.temperaturSensor.lastValue = ev.value;
                 this.temperaturSensor.lastTime = time;
+                
 
                 if (ev.alrtDevice === 1) {
-                   this.temperaturSensor.alert++;
+                   this.temperaturSensor.alert = true;
                    this.temperaturSensor.message = "Die Temperatur steigt. Bitte nachsehen!";
                 }
             }
@@ -82,8 +79,9 @@ var app = new Vue({
 
                 if (ev.alrtDevice === 1) {
                     this.firstGasSensor.alert++;
+                    console.log(this.firstGasSensor.alert);
                 }
-                if(this.firstGasSensor.alert > 39){
+                if(this.firstGasSensor.alert > 5){
                     this.firstGasSensor.message = "Bitte nachschauen ob alles in Ordnung ist!";
                 }
             }
@@ -99,18 +97,6 @@ var app = new Vue({
                 }
             }
             
-        },
-        // call the function "blinkRed" in your backend
-        blinkRed: function (nr) {
-            var duration = 2000; // blinking duration in milliseconds
-            axios.post(rootUrl + "/api/device/" + nr + "/function/blinkRed", { arg: duration })
-                .then(response => {
-                    // Handle the response from the server
-                    console.log(response.data); // we could to something meaningful with the return value here ... 
-                })
-                .catch(error => {
-                    alert("Could not call the function 'blinkRed' of device number " + nr + ".\n\n" + error)
-                })
         },
         // get the value of the variable "temperature" on the device with number "nr" from your backend
         getTemperature: function (nr) {
@@ -130,6 +116,14 @@ var app = new Vue({
                 .catch(error => {
                     alert("Could not read the button state of device number " + nr + ".\n\n" + error)
                 })
+        },
+        resetMessages(){
+            this.temperaturSensor.alert = false;;
+            this.temperaturSensor.message = "";
+            this.firstGasSensor.alert = 0;
+            this.firstGasSensor.message = "";
+            this.secondGasSensor.alert=0;
+            this.secondGasSensor.message = "";
         }
     }
 })

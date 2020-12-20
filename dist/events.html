@@ -16,10 +16,20 @@
     <div id="app" class="container">
         <ul class="pager">
             <li class="previous"><a href="index.html">Previous</a></li>
+            <li class="center"><a href="index.html">Nachrichten Zurücksetzen!</a></li>
         </ul>
         <div class="row"  v-if="successfulLoad">
             <div class="text-light text-center shadow-lg p-3 mb-5 bg-success rounded">
                 <h3>{{message}}</h3>
+            </div>
+            <div v-if="temperaturSensor.message !=''" class="text-light text-center shadow-lg p-3 mb-5 bg-danger rounded">
+                <h3>{{temperaturSensor.message}}</h3>
+            </div>
+            <div v-if="firstGasSensor.message !=''" class="text-light text-center shadow-lg p-3 mb-5 bg-danger rounded">
+                <h3>{{firstGasSensor.message}}</h3>
+            </div>
+            <div v-if="secondGasSensor.message !=''" class="text-light text-center shadow-lg p-3 mb-5 bg-danger rounded">
+                <h3>{{secondGasSensor.message}}</h3>
             </div>
         </div>
         <div class="row" v-else-if="!successfulLoad">            
@@ -36,12 +46,6 @@
             </div>
             <div class="shadow-lg p-3 mb-5 bg-white rounded" style="background-color:rgb(255, 255, 255); text-align: center;">
                 <h1>Gaswert von Sensor 1</h1>
-                <!--- <ul v-if="eventName === 'gasValue'">
-                    <li v-for="value in arrayGasValues">{{ value }}</li>
-                </ul>
-                <ul v-else>
-                    <li v-for="value in arrayGasValues">{{ value }}</li>
-                </ul>--->
                 <div>
                     <canvas class="myv-4 w-100" id="myChartGas" width="900" height="380"></canvas>
                 </div>

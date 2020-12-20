@@ -42,39 +42,41 @@
                             style="background-color: lightgreen;">
                             <h3>{{temperaturSensor.lastValue}} °C</h3>
                             <p>Zuletzt aktualisiert um: {{temperaturSensor.lastTime}}</p>
-                            <div v-if="temperaturSensor.message !=''">
+                            <div v-if="temperaturSensor.message !=''" class="text-light text-center shadow-lg p-3 mb-5 bg-danger rounded">
                                 <h3>{{temperaturSensor.message}}</h3>
                             </div>
                         </div>
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading text-center">
-                            <h3>DEVICES</h3> <!-- VARIABLES  -->
+                            <h3>GASSENSOR 1</h3> <!-- VARIABLES  -->
                         </div>
                         <div class="panel-body text-center"
                             style="background-color: lightgreen;">
                         <h3>{{firstGasSensor.lastValue}}</h3>
                         <p>Zuletzt aktualisiert um: {{firstGasSensor.lastTime}}</p>
-                        <div v-if="firstGasSensor.message !=''">
+                        <div v-if="firstGasSensor.message !=''" class="text-light text-center shadow-lg p-3 mb-5 bg-danger rounded">
                             <h3>{{firstGasSensor.message}}</h3>
                         </div>
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading text-center">
-                            <h3>DEVICES</h3> <!-- VARIABLES  -->
+                            <h3>GASSENSOR 2</h3> <!-- VARIABLES  -->
                         </div>
                         <div class="panel-body text-center"
                             style="background-color: lightgreen;">
                             <h3>{{secondGasSensor.lastValue}}</h3>
                             <p>Zuletzt aktualisiert um: {{secondGasSensor.lastTime}}</p>
-                            <div v-if="secondGasSensor.message !=''">
+                            <div v-if="secondGasSensor.message !=''" class="text-light text-center shadow-lg p-3 mb-5 bg-danger rounded">
                                 <h3>{{secondGasSensor.message}}</h3>
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
                 <ul class="pager">
-                    <li class="center"><a href="cloud_demo.html">Live mitverfolgen</a></li>
+                    <li class="center"><a href="events.html">Live mitverfolgen</a></li>
+                    <li class="button" v-on:click="resetMessages()"><a>Habs gesehen, Nachrichten Zurücksetzen</a></li>
                 </ul>
             </div>
        </div>

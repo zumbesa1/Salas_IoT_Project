@@ -1,3 +1,4 @@
+var correctedoldTempValue = 100;
 // react on the "getTemperature" Event
 function getTemperature (event) {
     // read variables from the event
@@ -11,16 +12,15 @@ function getTemperature (event) {
     let message = "Verbindung zu deinem smarten Brandmelder ist aktiv.";
     var floatValue = parseFloat(evData);
     var correctednewTempValue = ((floatValue - 4)*10)/10;
-    correctedoldTempValue = correctednewTempValue;
-    let newTempValue = correctednewTempValue.toString();
     let difference = correctednewTempValue-correctedoldTempValue;
-    if( difference > 1.5 ){
+    correctedoldTempValue = correctednewTempValue;
+    let newTempValue = correctednewTempValue;
+    if( difference > 0.5 ){
         alrtDevice = 1;
     }
     else{
         alrtDevice = 0;
     }
-
     // send data to all connected clients
     sendData("temperature", newTempValue, message, evDeviceId, evTimestamp, alrtDevice);
 }
@@ -33,13 +33,12 @@ function getGasValue (event) {
     let evDeviceId = ev.coreid; // the device id
     let evTimestamp = Date.parse(ev.published_at); // the timestamp of the event
     let alrtDevice = 0;
-    if( evData > 300 ){
+    if( evData > 100 ){
         alrtDevice = 1;
     }
     else{
         alrtDevice = 0;
     }
-    
     // helper variables that we need to build the message to be sent to the clients
     let message = "Verbindung zu deinem smarten Brandmelder ist aktiv.";
     // send data to all connected clients
@@ -54,7 +53,7 @@ function getGasValue2 (event) {
     let evDeviceId = ev.coreid; // the device id
     let evTimestamp = Date.parse(ev.published_at);
     let alrtDevice = 0;
-    if( evData > 300 ){
+    if( evData > 100 ){
         alrtDevice = 1;
     }
     else{

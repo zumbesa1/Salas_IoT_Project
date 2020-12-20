@@ -3,7 +3,7 @@ var app = new Vue({
     data: {
       messages: [],
       lastMessage: "",
-      successfulLoad: true,
+      successfulLoad: false,
       eventName: "",
       message: "",
       temperaturSensor: {
@@ -15,7 +15,7 @@ var app = new Vue({
         timeCollection: [],
       },
       firstGasSensor: {
-        alert : false,
+        alert : 0,
         message: "",
         lastTime: "",
         lastValue: "",
@@ -23,7 +23,7 @@ var app = new Vue({
         timeCollection: [],
       },
       secondGasSensor: {
-        alert : false,
+        alert : 0,
         message: "",
         lastTime: "",
         lastValue: "",
@@ -36,6 +36,7 @@ var app = new Vue({
         this.createChartGas();
         this.createChartGas2();
         this.createChartTemp();
+        this.resetMessages();
     },
     methods: {
         initSse: function () {
@@ -46,6 +47,7 @@ var app = new Vue({
                   console.log(event);
                   this.updateVariables(event);
                   this.successfulLoad = true;
+                  this.message = "Verbindung zu deinem smarten Brandmelder ist aktiv.";
                 };
             } else {
                 this.successfulLoad = false;
@@ -61,6 +63,9 @@ var app = new Vue({
                     var min  = formatedTimestamp.getMinutes().toString();
                     var sec  = formatedTimestamp.getSeconds().toString();
                     var time = hour + ":" + min +":" + sec + " Uhr";
+                    var alertDevice = JSON.parse(event.data).alrtDevice;
+                    console.log(alertDevice);
+                    console.log(this.temperaturSensor.alert);
 
                     
 
@@ -74,6 +79,10 @@ var app = new Vue({
                           this.temperaturSensor.values.splice(0,1);
                           this.temperaturSensor.timeCollection.splice(0,1);
                         }
+                        if (alertDevice === 1) {
+                          this.temperaturSensor.alert = true;
+                          this.temperaturSensor.message = "Die Temperatur steigt zu schnell. Bitte nachsehen!";
+                       }
                     }
                     else if(this.eventName === "gasValue"){
                         
@@ -86,11 +95,13 @@ var app = new Vue({
                         this.firstGasSensor.values.splice(0,1);
                         this.firstGasSensor.timeCollection.splice(0,1);
                       }
-                        if(value > 2000){
-                          this.firstGasSensor.gasValueAlert = true; 
-                          this.firstGasSensor.message = "In Ihrer Wohnung steigt der Kohlenstoffmonoxidanteil.";
-                        }
-                        else{this.firstGasSensor.alert = false;}
+                      if(alertDevice === 1 ){
+                        this.firstGasSensor.alert++; 
+                      }
+                      if(this.firstGasSensor.alert > 39){
+                        this.firstGasSensor.message = "In Ihrer Wohnung ist der Kohlenstoffmonoxidanteil zu hoch.";
+                      }
+                        
                     }
                     else if(this.eventName === "gasValue2"){
                       this.secondGasSensor.lastTime = time;
@@ -102,11 +113,12 @@ var app = new Vue({
                         this.secondGasSensor.values.splice(0,1);
                         this.secondGasSensor.timeCollection.splice(0,1);
                       }
-                        if(value > 2000){
-                          this.secondGasSensor.alert = true; 
-                          this.secondGasSensor.message = "In Ihrer Wohnung steigt der Kohlenstoffmonoxidanteil.";
-                        }
-                        else{this.secondGasSensor.alert = false;}
+                      if(alertDevice === 1 ){
+                        this.secondGasSensor.alert++; 
+                      }
+                      if(this.secondGasSensor.alert > 39){
+                        this.secondGasSensor.message = "In Ihrer Wohnung ist der Kohlenstoffmonoxidanteil zu hoch.";
+                      }
                     }
                     else{
                         message = "There is no data available";
@@ -222,5 +234,13 @@ var app = new Vue({
                 }
               })
         },
+        resetMessages(){
+          this.temperaturSensor.alert = false;;
+          this.temperaturSensor.message = "";
+          this.firstGasSensor.alert = 0;
+          this.firstGasSensor.message = "";
+          this.secondGasSensor.alert=0;
+          this.secondGasSensor.message = "";
+      }
     }
 })
